@@ -4,9 +4,14 @@
   padding: 12px;
   margin: 8px;
   font-weight: 400;
-  min-width: 8rem;
+  width: 9rem;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  transition: all 0.1s ease-in-out;
+
+  &:hover {
+    scale: 1.05;
+  }
 
   .name {
     font-size: 1.5rem;
