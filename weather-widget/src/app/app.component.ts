@@ -1,13 +1,54 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { WeatherDataComponent } from './components/weather-data/weather-data.component';
+import { CitySelectorService } from './services/city-selector/city-selector.service';
+import { Subscription, forkJoin, timer } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { WeatherService } from './services/weather/weather.service';
+import { ApiResponse } from '../model/weather.model';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, WeatherDataComponent, CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'weather-widget';
+  cities: ApiResponse[] = [];
+  private subscription: Subscription = new Subscription();
+  private forkSubscription: Subscription = new Subscription();
+  private timerSubscription: Subscription = new Subscription();
+
+  constructor(
+    private readonly citySelectorService: CitySelectorService,
+    private readonly weatherService: WeatherService
+  ) {}
+
+  ngOnInit() {
+    this.subscription = this.citySelectorService
+      .getCities()
+      .subscribe((cities) => {
+        this.timerSubscription.unsubscribe();
+        timer(0, 10000).subscribe(() => {
+          this.forkSubscription = this.fetchCitiesData(cities).subscribe(
+            (res) => (this.cities = res)
+          );
+        });
+      });
+  }
+
+  fetchCitiesData(selectedCities: any[]) {
+    return forkJoin([
+      this.weatherService.getWeatherData(selectedCities[0]),
+      this.weatherService.getWeatherData(selectedCities[1]),
+      this.weatherService.getWeatherData(selectedCities[2]),
+    ]);
+  }
+
+  ngOnDestroy() {
+    this.timerSubscription.unsubscribe();
+    this.forkSubscription.unsubscribe();
+    this.subscription.unsubscribe();
+  }
 }

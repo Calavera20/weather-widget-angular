@@ -1,1 +1,5 @@
-<router-outlet />
+<div class="widget-wrapper" *ngIf="cities.length > 0">
+  <app-weather-data [city]="cities[0]"></app-weather-data>
+  <app-weather-data [city]="cities[1]"></app-weather-data>
+  <app-weather-data [city]="cities[2]"></app-weather-data>
+</div>

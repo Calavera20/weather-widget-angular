@@ -1,0 +1,10 @@
+<div *ngIf="city" class="data-container" (click)="navigateToDetails(city.id)">
+  <div class="name">{{ city.name }}</div>
+  <div class="weather">
+    <img [src]="getImageForWeather(city.weather[0].main)" />
+    <span class="temperature"
+      >{{ city.main.temp | number : "1.0-0" }}&deg;C</span
+    >
+  </div>
+  <div class="description">{{ city.weather[0].description | titlecase }}</div>
+</div>
