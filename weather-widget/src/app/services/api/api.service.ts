@@ -9,17 +9,14 @@ import { catchError } from 'rxjs/operators';
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  // Example GET request
   public getData(url: string): Observable<any> {
     return this.http.get(url).pipe(catchError(this.handleError));
   }
 
-  // Example POST request
   public postData(url: string, data: any): Observable<any> {
     return this.http.post(url, data).pipe(catchError(this.handleError));
   }
 
-  // Handle API errors
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'any error!';
     if (error.error instanceof ErrorEvent) {

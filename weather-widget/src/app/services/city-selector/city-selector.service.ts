@@ -10,10 +10,8 @@ export class CitySelectorService {
 
   constructor() {}
 
-  getCities(): Observable<any[]> {
-    //TODO: replace timer
-    //return timer(0, 60000).pipe(map(() => this.selectRandomCities(3)));
-    return timer(0, 600000).pipe(map(() => this.selectRandomCities(3)));
+  getCities(): Observable<typeof citiesData.data> {
+    return timer(0, 60000).pipe(map(() => this.selectRandomCities(3)));
   }
 
   private selectRandomCities(count: number): any[] {
