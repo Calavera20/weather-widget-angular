@@ -10,7 +10,7 @@ export class CitySelectorService {
 
   constructor() {}
 
-  getCities(): Observable<typeof citiesData.data> {
+  public getCities(): Observable<typeof citiesData.data> {
     return timer(0, 60000).pipe(map(() => this.selectRandomCities(3)));
   }
 

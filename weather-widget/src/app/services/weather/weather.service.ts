@@ -10,7 +10,7 @@ import { ApiResponse } from '../../../model/weather.model';
 export class WeatherService {
   constructor(private readonly apiService: ApiService) {}
 
-  getWeatherData(cityData: any): Observable<ApiResponse> {
+  public getWeatherData(cityData: any): Observable<ApiResponse> {
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${cityData.lat}&lon=${cityData.lon}&appid=${config.apiKey}&units=metric`;
     return this.apiService.getData(url);
   }

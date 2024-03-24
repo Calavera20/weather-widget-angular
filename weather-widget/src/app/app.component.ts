@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { WeatherDataComponent } from './components/weather-data/weather-data.component';
 import { CitySelectorService } from './services/city-selector/city-selector.service';
@@ -13,6 +17,7 @@ import { ApiResponse } from '../model/weather.model';
   imports: [RouterOutlet, WeatherDataComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   cities: ApiResponse[] = [];
@@ -22,23 +27,31 @@ export class AppComponent {
 
   constructor(
     private readonly citySelectorService: CitySelectorService,
-    private readonly weatherService: WeatherService
+    private readonly weatherService: WeatherService,
+    private readonly cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
+    this.startFetching();
+  }
+
+  private startFetching() {
     this.subscription = this.citySelectorService
       .getCities()
       .subscribe((cities) => {
         this.timerSubscription.unsubscribe();
-        timer(0, 10000).subscribe(() => {
+        this.timerSubscription = timer(0, 10000).subscribe(() => {
           this.forkSubscription = this.fetchCitiesData(cities).subscribe(
-            (res) => (this.cities = res)
+            (res) => {
+              this.cities = res;
+              this.cd.detectChanges();
+            }
           );
         });
       });
   }
 
-  fetchCitiesData(selectedCities: any[]) {
+  private fetchCitiesData(selectedCities: any[]) {
     return forkJoin([
       this.weatherService.getWeatherData(selectedCities[0]),
       this.weatherService.getWeatherData(selectedCities[1]),

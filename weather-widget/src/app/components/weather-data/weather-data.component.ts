@@ -15,7 +15,7 @@ export class WeatherDataComponent {
 
   constructor() {}
 
-  getImageForWeather(weather: string) {
+  public getImageForWeather(weather: string) {
     const route = '../../../../assets/animated/';
     switch (weather) {
       case WeatherMain.CLEAR:
@@ -35,7 +35,7 @@ export class WeatherDataComponent {
     }
   }
 
-  navigateToDetails(id: number) {
+  public navigateToDetails(id: number) {
     window.open(`https://openweathermap.org/city/${id}`, '_blank');
   }
 }
