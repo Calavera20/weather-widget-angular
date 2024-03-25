@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ApiResponse, WeatherMain } from '../../../model/weather.model';
+import { CapitalizeFirstLetterPipe } from '../../pipes/capitalize-first-letter.pipe';
 
 @Component({
   selector: 'app-weather-data',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CapitalizeFirstLetterPipe],
   templateUrl: './weather-data.component.html',
   styleUrl: './weather-data.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

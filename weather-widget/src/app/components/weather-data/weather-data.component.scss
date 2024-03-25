@@ -1,4 +1,7 @@
 .data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   cursor: pointer;
   border-radius: 12px;
   padding: 12px;
@@ -31,5 +34,15 @@
 
   .description {
     text-align: center;
+    max-width: 9rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (max-width: 32.5rem) {
+  .data-container {
+    width: auto;
   }
 }
