@@ -10,6 +10,7 @@ import { Subscription, forkJoin, timer } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { WeatherService } from './services/weather/weather.service';
 import { ApiResponse } from '../model/weather.model';
+import { CityData } from '../data/citiesData';
 
 @Component({
   selector: 'app-root',
@@ -51,7 +52,7 @@ export class AppComponent {
       });
   }
 
-  private fetchCitiesData(selectedCities: any[]) {
+  private fetchCitiesData(selectedCities: CityData[]) {
     return forkJoin([
       this.weatherService.getWeatherData(selectedCities[0]),
       this.weatherService.getWeatherData(selectedCities[1]),

@@ -7,3 +7,9 @@ export const citiesData = {
     { name: 'London', lat: 51.5073219, lon: -0.1276474 },
   ],
 };
+
+export interface CityData {
+  name: string;
+  lat: number;
+  lon: number;
+}
